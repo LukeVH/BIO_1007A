@@ -1,0 +1,21 @@
+---
+title: "Assignment2"
+author: "Luke Van Horn"
+date: "1/10/2023"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+![](/Users/luke/Desktop/soupspoon.png)
+ 
+Table header | Table Header | table Header
+-|--|--------------
+1|2|3
+4            |5             |6
+7            |8             |9
+10           |11            |12
+
+When I was a boy, my father told me that people only get pooped on by birds *three times* in their life. A bird has now pooped on me three times. Either I will not get pooped on for the rest of my long life, or **my death is imminent**. 
+
