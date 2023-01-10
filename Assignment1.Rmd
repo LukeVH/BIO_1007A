@@ -1,0 +1,17 @@
+---
+title: "Assignment1"
+author: "Luke Van Horn"
+date: "1/10/2023"
+output: html_document
+---
+
+# I took notes by hand
+## here is a sample  
+git status  
+git add -A  
+git commit -am "note"  
+git push  
+double space at end to add a return
+
+`## this is where I can put anything`  
+^code fencing ignores the formatting?

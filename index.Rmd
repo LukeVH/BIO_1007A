@@ -1,0 +1,21 @@
+---
+title: "Web Page BIO"
+author: "Luke Van Horn"
+date: "1/10/2023"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+# Header
+## Header 2
+### Header 3
+
+This is plain text. R is a *FREAKIN joy* to work with, it makes me **sick**. 
+
+## Assingments  
+
+[Assignment 1](Assignment1.html)
+
+[Website link](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
