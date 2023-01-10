@@ -19,3 +19,23 @@ Table header | Table Header | table Header
 
 When I was a boy, my father told me that people only get pooped on by birds *three times* in their life. A bird has now pooped on me three times. Either I will not get pooped on for the rest of my long life, or **my death is imminent**. 
 
+* item  
+  + item 1  
+  + item 2  
+
+1. item 1  
+2. item 2  
+
+[Good song](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
+
+# header 1
+## header 2
+### header 3
+
+NH~4~^+^
+
+$3 = 4sometimes$
+
+`this is how I wrote the equation $3 = 4sometimes$`
+
+  
