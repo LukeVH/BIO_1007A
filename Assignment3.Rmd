@@ -1,0 +1,51 @@
+---
+title: "Assignment3"
+author: "Luke Van Horn"
+date: "1/12/2023"
+output: html_document
+---
+Question 1.
+```{r}
+x = 1.1
+a = 2.2
+b = 3.3
+
+z<- x^a^b
+print(z)
+
+z<- (x^a)^b
+print(z)
+
+z<-(3*x^3) + (2*x^2) + 1
+print(z)
+
+```
+Question 2.
+```{r}
+first <- c(seq(from=1, to=8), seq(from=7, to=1))
+print(first)
+
+second<- c(rep(x=1:1, each=1), rep(x=2:2, each=2), rep(x=3:3, each=3), rep(x=4:4, each=4), rep(x=5:5, each=5))
+print(second)
+
+third<- c(rep(x=5:5, each=1), rep(x=4:4, each=2), rep(x=3:3, each=3), rep(x=2:2, each=4), rep(x=1:1, each=5))
+print(third)
+
+```
+Question 3.
+```{r}
+queue <- c("sheep", "fox", "owl", "ant")
+print(queue)
+queue <- c(queue, "serpent")
+print(queue)
+queue <-c(queue[2:5])
+print(queue)
+queue <-c("donkey",queue)
+print(queue)
+queue <-c(queue[1:4])
+print(queue)
+queue <- append(queue, "aphid", after = 3)
+print(queue)
+which(queue=="aphid")
+```
+
