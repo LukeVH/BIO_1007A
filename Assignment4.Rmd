@@ -1,0 +1,37 @@
+---
+title: "Assignment4"
+author: "Luke Van Horn"
+date: "1/17/2023"
+output: html_document
+---
+Question 1.
+```{r}
+n_dims<-sample(3:10, 1)
+print(n_dims)  
+
+vec<-1:n_dims^2  
+s<-sample(vec)
+m<-matrix(data=s, ncol=n_dims, nrow=n_dims)
+print(m)
+
+t<-t(m)
+print(t)
+#The matrix columns are now the rows and vice-versa
+
+sum(t[1,])
+mean(t[1,])
+sum(t[n_dims,])
+mean(t[n_dims,])
+
+```
+Question 2.
+```{r}
+rand<-runif(n=16)
+my_matrix<-matrix(rand, ncol=4, nrow=4)
+
+
+
+```
+
+
+
