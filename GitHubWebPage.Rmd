@@ -1,5 +1,5 @@
 ---
-title: "GitHub-page"
+title: "Guide"
 author: "Luke Van Horn"
 date: "1/15/2023"
 output: html_document
