@@ -1,0 +1,48 @@
+---
+title: "GitHub-page"
+author: "Luke Van Horn"
+date: "1/15/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# How to make a GitHub Web page, friend.  
+
+### Installing Git  
+
+To create a GitHub Web page, you first have to install *git* onto your computer. There are several methods that work for some and not for others so you might have to try a few methods before you find one that works. There are several options listed on the *git* website, linked [here](https://git-scm.com/downloads). If you have an older mac this [website](https://mackyle.github.io/git-osx-installer/) works. After you believe you've installed it, open RStudio or restart it if you had it open and try opening a new project. If you are able to select `Version Control` --> `Git`, then you can be assured you have it installed.  
+
+If you have any issues installing *git*, I would recommend googling your problem as there is likely a solution on the internet.  
+
+### Setting up a GitHub page  
+
+Now that you have *git* installed, you can create an account on [github.com](https://github.com/). After creating an account, create a repository. I added a Readme file to show a description of my website and made the license MIT so that people cannot use it for profit. Click the code button on your new repository and copy the clone link into a place where you can recall it. To generate a personal access token, which will be needed to link your local repository with GitHub, go to `settings` under your profile --> `developer settings` --> `personal access tokens` --> `tokens (classic)` --> `generate new token (classic)`. Set the expiration to a date when you will no longer need the token. Save this token somewhere where you can recall it.  
+
+### Linking GitHub to your local computer
+
+Now in RStudio, in the upper right corner hit `New Project...` --> `Version Control` --> `Git` this will clone your GitHub repository onto your local computer through *git* and RStudio. In the **Console** section of RStudio, install the `credentials` package by typing in `install.packages("credentials")`. Following this, run this code:   
+`git config --global user.email "put github email here"`  
+`git config --global user.name "put your name here"`  
+`credentials::set_github_pat("put PAT here")`  
+
+Now your RStudio project should be linked with your GitHub repository.  
+
+### Web page content  
+
+With your RStudio linked to GitHub, create an `R Markdown...` in the upper left corner. Name this new `R Markdown` "index". Naming a page "index" will make it the main page of the website. Now you can type in the lines below yaml code which is separated by a ---- usually around line 6. Finally use the backwards apostrophe symbol to to fence text if you want it to appear as it is. For example, you might write `this is how you make a word **bold**`, instead of this is how you make a word **bold**. Here is a useful guide for common formatting tips:
+
+![](/Users/luke/Desktop/Screen Shot 2023-01-16 at 7.08.17 PM.png)
+![](/Users/luke/Desktop/Screen Shot 2023-01-16 at 7.08.28 PM.png)  
+
+### Adding changes to your web page  
+
+Now that you have created your text, you must add your changes from your local computer to GitHub.
+To get the status of local files compared to github write `git status` in your **Terminal** section of you RStudio work space. Run `git add -A` to add all your changes, then run `git commit -am "note"` to commit all your changes. Write a description for your changes in "note". Commits save a version so that you can return to it if necessary. Create commits to keep a record of your changes. Run `git push` to push your changes from your computer to GitHub. 
+
+### Creating the web page  
+
+Finally, back on GitHub, go to `your repositories` and select your repository. Go to `settings` --> `pages` and under `Branch` select `None` and change it to `master branch`. This will create the web page. It may take a few minutes but a link to it will appear under `GitHub Pages`.   
+
