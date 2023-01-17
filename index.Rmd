@@ -18,7 +18,8 @@ This is plain text. R is a *FREAKIN joy* to work with, it makes me **sick**!
 
 [Assignment 1](Assignment1.html)  
 [Assignment 2](Assignment2.html)  
-[Assignment 3](Assignment3.html)
+[Assignment 3](Assignment3.html)  
+[Guide](Guide.html)  
 
 [Website link](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
 
