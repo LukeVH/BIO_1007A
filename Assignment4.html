@@ -174,33 +174,45 @@ pre code {
 <p>Question 1.</p>
 <pre class="r"><code>n_dims&lt;-sample(3:10, 1)
 print(n_dims)  </code></pre>
-<pre><code>## [1] 4</code></pre>
+<pre><code>## [1] 10</code></pre>
 <pre class="r"><code>vec&lt;-1:n_dims^2  
 s&lt;-sample(vec)
 m&lt;-matrix(data=s, ncol=n_dims, nrow=n_dims)
 print(m)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]   10   16   13    8
-## [2,]   11    3    2   15
-## [3,]    6    1   12   14
-## [4,]    5    9    4    7</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]   35   49   50   88   80   54   66   47   13    53
+##  [2,]   57   56   63   17    5   64   59    1   62    79
+##  [3,]    4   78    7   58   27   48   34   67   71     2
+##  [4,]   65   70   42   44   15   14   29   68   91    33
+##  [5,]   30   18   41   96   39   21   75   28   26    89
+##  [6,]   84   86   46   82   95   16   52   31   87    61
+##  [7,]   94   32   76   11   81   69   23   25   73    45
+##  [8,]    6   12   85   24   74   55   19   22   77    20
+##  [9,]    3   43   40   10   72   99  100   37    8    92
+## [10,]   98   83   90   51   97   93   60    9   38    36</code></pre>
 <pre class="r"><code>t&lt;-t(m)
 print(t)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4]
-## [1,]   10   11    6    5
-## [2,]   16    3    1    9
-## [3,]   13    2   12    4
-## [4,]    8   15   14    7</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]   35   57    4   65   30   84   94    6    3    98
+##  [2,]   49   56   78   70   18   86   32   12   43    83
+##  [3,]   50   63    7   42   41   46   76   85   40    90
+##  [4,]   88   17   58   44   96   82   11   24   10    51
+##  [5,]   80    5   27   15   39   95   81   74   72    97
+##  [6,]   54   64   48   14   21   16   69   55   99    93
+##  [7,]   66   59   34   29   75   52   23   19  100    60
+##  [8,]   47    1   67   68   28   31   25   22   37     9
+##  [9,]   13   62   71   91   26   87   73   77    8    38
+## [10,]   53   79    2   33   89   61   45   20   92    36</code></pre>
 <pre class="r"><code>#The matrix columns are now the rows and vice-versa
 
 sum(t[1,])</code></pre>
-<pre><code>## [1] 32</code></pre>
+<pre><code>## [1] 476</code></pre>
 <pre class="r"><code>mean(t[1,])</code></pre>
-<pre><code>## [1] 8</code></pre>
+<pre><code>## [1] 47.6</code></pre>
 <pre class="r"><code>sum(t[n_dims,])</code></pre>
-<pre><code>## [1] 44</code></pre>
+<pre><code>## [1] 510</code></pre>
 <pre class="r"><code>mean(t[n_dims,])</code></pre>
-<pre><code>## [1] 11</code></pre>
+<pre><code>## [1] 51</code></pre>
 <p>```</p>
 
 

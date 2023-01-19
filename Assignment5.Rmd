@@ -58,7 +58,9 @@ dFrame<-dFrame[order(dFrame$my_letters),]
 mean(my_unifs[complete.cases(my_unifs)])
 
 #rename the second column ‘my_LETTERS’
-library(tidyverse)
-rename(dFrame, my_LETTERS=my_letters)
+colnames(dFrame)<- c("my_unifs", "my_LETTERS")
+print(dFrame)
+
+
 ```
 

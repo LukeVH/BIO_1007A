@@ -9,7 +9,7 @@ output:
 ---
 
 # Luke's Page  
-
+#### Welcome! My name is Luke and I'm a student taking a class on R. This is a page that displays my completed assignments from the class Reproducible Biology in R.
 
 ## Daily Assignments  
 
@@ -20,9 +20,11 @@ output:
 [Assignment 5](Assignment5.html)  
 
 ## Weekly Assignments  
-[Guide](GitHubWebPage.html)  
+[WA 1](GitHubWebPage.html)  
+[WA 2](WeeklyAssignment2.html)
 
-## Click Here  
+## Click Here for a nice song  
 [Website link](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
 
-
+## Picture
+![](/Users/luke/Desktop/soupspoon.png)
