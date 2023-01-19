@@ -24,10 +24,6 @@ sum(t[n_dims,])
 mean(t[n_dims,])
 
 ```
-Question 2.
-```{r}
-rand<-runif(n=16)
-my_matrix<-matrix(rand, ncol=4, nrow=4)
 
 
 
