@@ -23,7 +23,14 @@ output:
 
 ## Weekly Assignments  
 [WA 1](GitHubWebPage.html)  
-[WA 2](WeeklyAssignment2.html)
+[WA 2](WeeklyAssignment2.html)  
+
+## Class notes  
+[2023-01-12-Scripting-in-R](2023-01-12-Scripting-in-R.html)  
+[2023-01-17-Data-Structures](2023-01-17-Data-Structures.html)  
+[2023-01-19-Matrices-DFs-Functions](2023-01-19-Matrices-DFs-Functions.html)  
+[2023-01-23-dyplr](2023-01-23-dyplr.html)
+[2023-01-24-ggplot2](2023-01-24-ggplot2.html)
 
 ## Click Here for a nice song  
 [Website link](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
