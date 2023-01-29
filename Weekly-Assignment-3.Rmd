@@ -1,0 +1,31 @@
+---
+title: "Weekly-Assignment-3"
+author: "Luke Van Horn"
+date: "1/26/2023"
+output: html_document
+---
+
+Go to Dryad to choose a published paper and data set and reconstruct your own figure. Code a ggplot graph that looks as close to the published figure as you can.
+```{r}
+
+library(ggplot2)
+
+bats<-read.table(file="Bat-Data/ESM_loads.csv", header=TRUE, sep=",")
+
+
+bats$species<-factor(bats$species, labels=c("(a)            E. fuscus", "(b)          M. leibii", "(c)          M. lucifugus", "(d)          M. septentrionalis", "(e)          M. sodalis", "(f)          P. subflavus"))
+
+b<- ggplot(data=bats, 
+           aes(x=time, 
+               y=mean.log.pd.Loads)) + 
+  geom_point(color="black", size=1) +
+  ylab("mean log[10] loads (ng)") + 
+  xlab("") +
+  scale_y_continuous(breaks = c(-8,-6,-4,-2,0)) + 
+ facet_wrap(~species, nrow=3, strip.position="top")+
+  theme_classic()
+b + geom_errorbar(aes(ymax = mean.log.pd.Loads + lse,
+                       ymin = mean.log.pd.Loads - lse,))
+
+```
+

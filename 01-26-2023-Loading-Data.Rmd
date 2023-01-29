@@ -1,0 +1,107 @@
+---
+title: "01-26-2023-Loading-Data"
+author: "Luke Van Horn"
+date: "1/26/2023"
+output: html_document
+---
+Lecture 8: Loading in Data  
+26 January 2023  
+LVH  
+
+
+
+```{r}
+######Lecture 8: Loading in Data  
+######26 January 2023  
+######LVH  
+
+### Create and save a dataset:
+### write.table(x=varName, file="outputfileName.csv, header=T sep=",")
+
+
+#### These functions read in a data set
+### read.table() 
+## read.table(file="path/to/data.csv", header = TRUE, sep = ",")
+
+### read.csv(file="data.csv", header=T)
+
+
+#### Use RDS object when only working in R. Creates an R object, so you don't have to work with individual files. Helps with data storage and transfering large files. Helpful with large data sets
+## saveRDS(my_data, file="FileName.RDS")
+## readRDS("FileName.RDS")
+## p <- readRDS("FileName.RDS")
+
+
+### Long vs Wide data formats
+### wide format = contains values that do NOT repeat in the ID column
+### long format = contains values that repeat in the ID column
+
+library(tidyverse)
+glimpse(billboard)
+
+b1 <- billboard %>%
+  pivot_longer(
+    cols = starts_with("wk"), #specify which columns you want to make 'longer'
+    names_to = "Week", # name of new column which will contain header names
+    values_to = "Rank", #name of new column which will contain the values
+    values_drop_na=TRUE #removes any rows where the value = NA
+  )
+
+#View(b1) ## rmarkdown does NOT like this - remove if knitting
+
+### pivot_wider
+### best for making occupancy matrix
+glimpse(fish_encounters)
+view(fish_encounters)
+
+fish_encounters %>%
+  pivot_wider(names_from= station, #which column you want to turn into multiple columns
+              values_from = seen) #which column contains the values for new column cells
+#creates occupancy matrix with NAs
+
+fish_encounters %>%
+  pivot_wider(names_from= station, #which column you want to turn into multiple columns
+              values_from = seen, #which column contains the values for new column cells
+              values_fill = 0) # fills NAs with 0s
+
+#creates occupancy matrix with 0s instead of NAs
+
+##### Dryad: makes research data freely reusable, citable, and discoverable
+library(ggthemes)
+
+## read.table()
+dryadData <- read.table(file="Amphibian-Data/veysey powell and babbitt_data_buffers and amphibians2.csv", header=TRUE, sep=",")
+glimpse(dryadData)
+head(dryadData)
+
+table(dryadData$species) ### allows you to see different groups of character column
+summary(dryadData$mean.hydro)
+
+dryadData$treatment
+# glimpse(dryadData)
+# head(dryadData)
+# table(dryadData$species)
+
+dryadData$species<-factor(dryadData$species, labels=c("Spotted Salamander", "Wood Frog")) #creating y 'labels' to use for the plot instead of AMMA and RASY
+
+#class(dryadData$treatment)
+dryadData$treatment <- factor(dryadData$treatment, 
+                              levels=c("Reference",
+                                       "100m", "30m")) #changes the order of the treatment groups to reference, 100m, 30m instead of 100m, 30m, reference
+
+
+p<- ggplot(data=dryadData, #defines the data set that the plot will be made from
+           aes(x=interaction(wetland, treatment), 
+               y=count.total.adults, fill=factor(year))) + geom_bar(position="dodge", stat="identity", color="black") + # defines which columns and rows should be represented in the plot on the x and y axes. interaction groups treatment and wetland. fill groups and colors columns by year. geom_bar makes it a bar plot. position defines where the bars should be such as stacked or grouped. Stat is how the plot treats the data. color changes the color of the outlines.
+  ylab("Number of breeding adults") + #gives the y axis title
+  xlab("") + # gives the x axis title (nothing)
+  scale_y_continuous(breaks = c(0,100,200,300,400,500)) + # labels the units of the y axis and makes them continuous on a defined range
+  scale_x_discrete(labels=c("30 (Ref)", "124 (Ref)", "141 (Ref)", "25 (100m)","39 (100m)","55 (100m)","129 (100m)", "7 (30m)","19 (30m)","20 (30m)","59 (30m)")) + #labels the units for the x axis. Makes them discrete values
+  facet_wrap(~species, nrow=2, strip.position="right") + # wraps the plots into a more easily viewed double plot. species names are placed on the right
+  theme_few() + scale_fill_grey() + # makes the theme and makes it greyscale
+  theme(panel.background = element_rect(fill = 'gray94', color = 'green'), legend.position="top",  legend.title= element_blank(), axis.title.y = element_text(size=12, face="bold", colour = "orange"), strip.text.y = element_text(size = 10, face="bold", colour = "red"))+  # changes the color and fill of the panel background's rectangle, locates the position of the legend, removes a legend title, defines the size, boldness, and color of the y axis label. strip.text.y changes the size, boldness, and color of the species name on the y axis on the right
+  guides(fill=guide_legend(nrow=1,byrow=TRUE)) # makes the legends one row instead of two
+
+p
+```
+
