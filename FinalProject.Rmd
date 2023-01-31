@@ -1,0 +1,43 @@
+---
+title: "FinalProject"
+author: "Luke Van Horn"
+date: "1/31/2023"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+## About `leaflet`  
+`leaflet` is an open-source JavaScript library that allows creation of interactive maps. I chose to learn about `leaflet` because of its aesthetic maps and coding ease. Having practice with a mapping package rounds out my R capabilities nicely.  
+## Leaflet basics
+
+In order to get started with leaflet, I downloaded `leaflet` by running `install.packages("leaflet") in my console. To get familiar with the package, I made a basic map called "map" with the default OpenStreetMap map tiles. This map creates a labelled popup called "Middlebury College" on the longitute and latitute coordinates I found online for Middlebury College. 
+```{r}
+library("leaflet")
+map <- leaflet()%>%
+  addTiles() %>%
+  addMarkers(lng=-73.17594474252131, lat=44.00826191138904, popup="Middlebury College")
+map
+```
+Data can be taken from data frames and put onto interactive maps. Below is some code that maps 10 points with longitute and latitude values.
+```{r}
+df = data.frame(Lat = 1:10, Long = rnorm(10))
+df
+leaflet(df) %>% addCircles(lng = ~Long, lat = ~Lat)
+```
+Although leaflet will automatically create circles from "Long" and "Lat" columns with `addCircles()`, this can explicitly stated with `lng = ~Long, lat = ~Lat`.
+
+```{r}
+m = leaflet() %>% addTiles()
+df = data.frame(
+  lat = rnorm(100),
+  lng = rnorm(100),
+  size = runif(100, 5, 20),
+  color = sample(colors(), 100)
+)
+m = leaflet(df) %>% addTiles()
+m %>% addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)
+m %>% addCircleMarkers(radius = runif(100, 4, 10), color = c('red'))
+
+```
+
+

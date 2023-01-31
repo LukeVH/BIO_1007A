@@ -9,7 +9,10 @@ output:
 ---
 
 # Luke's Page  
-#### Welcome! My name is Luke and I'm a student taking a class on R. This is a page that displays my completed assignments from the class Reproducible Biology in R.
+#### Welcome! My name is Luke and I'm a student taking a class on R. This is a page that displays my completed assignments from the class Reproducible Biology in R.  
+
+## Final Project  
+[Final Project](FinalProject.html)  
 
 ## Daily Assignments  
 
