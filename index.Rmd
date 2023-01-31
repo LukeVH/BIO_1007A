@@ -28,6 +28,7 @@ output:
 [WA 1](GitHubWebPage.html)  
 [WA 2](WeeklyAssignment2.html)  
 [WA 3](Weekly-Assignment-3.html)  
+[WA 4](Weekly-Assignment-4.html)  
 
 ## Class notes  
 [2023-01-12-Scripting-in-R](2023-01-12-Scripting-in-R.html)  
@@ -36,6 +37,7 @@ output:
 [2023-01-23-dyplr](2023-01-23-dyplr.html)
 [2023-01-24-ggplot2](2023-01-24-ggplot2.html)  
 [01-26-2023-Loading-Data](01-26-2023-Loading-Data.html)  
+[2023-01-30-Data-Analysis-Control-Structures](2023-01-30-Data-Analysis-Control-Structures.html)  
 
 ## Click Here for a nice song  
 [Website link](https://www.youtube.com/watch?v=XIN_8YiBjlQ&t&ab_channel=GandalfTheGrey)
