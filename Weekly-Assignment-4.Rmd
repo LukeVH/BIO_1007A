@@ -3,5 +3,31 @@ title: "Weekly-Assignment-4"
 author: "Luke Van Horn"
 date: "1/30/2023"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
+Simulate a brand new data frame (the type of data is up to you) and conduct a statistical analysis in R using 2 variables. Create a basic ggplot that goes with the analysis.
+```{r}
+library(tidyverse)
+temperature <- sort(rgamma(n=92, shape = 5, scale=5))
+presence <- sample(rep(c(1,0), each=46), prob = seq_len(92))
+freme <- data.frame(temperature, presence)
+freme
+
+fremeModel <- glm(presence ~ temperature, 
+                   data=freme,
+                   family=binomial(link=logit)) 
+summary(fremeModel)
+
+
+fremePlot <- ggplot( data= freme,
+                      aes(x=temperature, y=presence))+
+  geom_point(size=3, shape=5)+
+  stat_smooth(method = "glm", method.args=list(family=binomial))+
+  xlab("Temperature (˚F)")+
+  ylab("Presence of G. gorilla")+
+  theme_classic()
+fremePlot
+
+```
 

@@ -1,0 +1,147 @@
+---
+title: "2023-01-19-Matrices-DFs-Functions"
+author: "Luke Van Horn"
+date: "1/24/2023"
+output: html_document
+---
+
+```{r}
+####### Finishing up Matrices and Data frames
+####### 19 January 2023
+####### LVH
+
+m<-matrix(data = 1:12, nrow=3)
+
+## subsetting based on elements
+m[1:2,]
+m[,2:4]
+
+## subset with logical (conditional) statements
+## select all columns for which the totals are > 15
+
+colSums(m)
+colSums(m) > 15
+m[,colSums(m) > 15]
+
+
+## row sums now
+## select rows that sum up to 22
+
+m[rowSums(m) ==22,] # REMEMBER CONDITIONAL STATEMNETS OF EXACT MATCH NEED == NOT =
+m[rowSums(m) !=22,] # or 
+m[!rowSums(m) ==22,]
+
+### Logical operators: == != ><
+
+## subsetting to a vector changes the data type
+z<-m[1,]
+print(z)
+str(z)
+
+z2<-m[1, , drop=FALSE] # Keeps it as a matrix instead of a vector
+
+# simulate new matrix
+m2<-matrix(data=runif(9), nrow=3)
+m2
+m2[6]
+m2[3,2]
+
+### use assignment operator to substitue values
+m2[m2 > 0.6] <- NA
+m2
+ data<-iris
+head(data) # head to see first 6 rows
+tail(data) # shows last 6 rows
+
+data[3,2] # numbered indices still work
+
+dataSub<-data[,c("Species", "Petal.Length")]
+
+#### sort a data frame by values
+orderdIris <- iris[order(iris$Petal.Length),]
+
+######### FUNTIONS in R!!
+
+# everything in R is a function
+sum(3,2) # sum
+3 + 2 # + sign is a function
+sd
+
+## User-defined functions
+
+functionName <- function(argX=defaultX, argY=defaultY){
+  ##curly bracket starts the body of the function
+  ### lines of R code ### and notes
+  ### create local variables (only visible to R within the function)
+  #argX <- c("IDK"), use variables defined above in function down below
+  ### return(z)
+}
+
+myFunc <- function(a=3, b=4){
+  z<-a+b
+  return(z)
+}
+myFunc() # runs defaults
+z<-myFunc() # z must be saved outside of function to be printed later
+
+myFunc(a=100, b=3.4)
+
+
+#bad example, b not defined as a default and is defined outside function
+myFuncBad <- function(a=3){
+  z<-a+b
+  return(z)
+}
+b<-50
+z<-myFuncBad()
+z
+
+#### Multiple return statmetns
+
+#################################################
+# FUNCTION: HardyWeinberg
+# input: all allele frequency p (0,1)
+# output: p and the frequencies of 3 genotypes AA AB BB
+#-------------------------------------
+HardyWeinberg <- function(p = runif(1)){
+  if(p>1.0 | p < 0.0){
+    return("Function failure: p must be between 0 and 1")
+  }
+  q <- 1-p
+  fAA <- p^2
+  fAB<-2*p*q
+  fBB<-q^2
+  vecOut <- signif(c(p=p, AA=fAA, AB=fAB, BB=fBB), digits =3)
+  return(vecOut)
+}
+#######################################
+
+HardyWeinberg()
+freqs <- HardyWeinberg()
+freqs
+HardyWeinberg(3)
+
+### Create a complex default value
+############################################
+# FUNCTION: fitlinear2
+# fits a simple regression line
+# input: numeric list (p) of predictor (x) and response (y)
+# outputs: slope and p-value
+
+fitlinear2 <- function(p=NULL){
+  if(is.null(p)) {
+    p <- list(x=runif(20), y=runif(20))
+  }
+  myMod <- lm(p$x~p$y)
+  myOut <- c(slope= summary(myMod)$coeffecients[2,1], 
+             pValue = summary(myMod)$coeffecients[2,4])
+  plot(x=p$x, y=p$y) # quick plot to check output
+  return(myOut)
+}
+
+fitlinear2()
+myPars <- list(x=1:10, y=runif(10))
+fitlinear2(p=myPars)
+
+```
+
