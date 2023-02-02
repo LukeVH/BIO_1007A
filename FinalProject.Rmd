@@ -209,10 +209,26 @@ leaflet(cities) %>% addTiles() %>%
 ## My Map  
 Armed with this knowledge of **leaflet**, I created this map.
 ```{r}
-#v<-list(44.009033701591235,-73.18251784589387,44.01077630208863,-73.1810714919134,44.01344766959134,-73.18128143605556,44.015309452339565,-73.16813214614554,44.00160945176687,-73.17739168604255)
-
-#m<-matrix(v, ncol = 2,)
-#data.frame(m, row.names = Places, col.names)
+MFDC <- paste(sep = "<br/>",
+  "<b><a href='http://www.middleburyfiredept.org'>Middlebury Fire Department</a></b>",
+  "5 Seymour St",
+  "Middlebury, VT 05753")
+ridgeC <- paste(sep = "<br/>",
+  "<b><a href='https://www.middlebury.edu/announcements/news/2016/08/new-ridgeline-residence-complex-ready-middlebury-students'>Ridgeline Suites</a></b>",
+  "139 Ridgeline Rd",
+  "Middlebury, VT 05753")
+RossC <- paste(sep = "<br/>",
+  "<b><a href='https://www.middlebury.edu/office/dining-services/dining-halls#ross-dining-hall'>Ross Dining Hall</a></b>",
+  "HMKL Way",
+  "Middlebury, VT 05753")
+BihallC <- paste(sep = "<br/>",
+  "<b><a href='https://www.middlebury.edu/office/sciences-technical-support-services/mccardell-bicentennial-hall'>McCardell Bicentennial Hall</a></b>",
+  "Bicentennial Way",
+  "Middlebury, VT 05753")
+MCRCC<-  paste(sep = "<br/>",
+  "<b><a href='https://www.themcrc.com'>Rugby Fields</a></b>",
+  "14 Old Chapel Rd",
+  "Middlebury, VT 05753")
 
 dfMidd <-data.frame(
   lat = c(44.009033701591235,44.01077630208863,44.01344766959134,44.015309452339565, 44.00160945176687),
@@ -229,54 +245,102 @@ dfMidd <-data.frame(
 
 
 Midd <- leaflet(dfMidd)%>%
-  addTiles() %>%
+  addProviderTiles(providers$Stamen.Watercolor) %>%
   addCircleMarkers(
+    radius = 7,
+    stroke = TRUE,
+    weight = 3,
+    opacity= 1,
+    color="darkolivegreen",
+    fillOpacity = .7,
+    fillColor = "skyblue",
+    popup = ridgeC,
     lng = -73.18251784589387, lat = 44.009033701591235,
     label = "Ridgeline",
-    labelOptions = labelOptions(noHide = T)) %>%
-  #addPopups(-73.18251784589387, 44.009033701591235, content,
-    #options = popupOptions(closeButton = T))%>%
+    labelOptions = labelOptions(noHide = T,direction = "bottom",     
+        style = list(
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "12px",
+        "border-color" = "rgba(0,0,0,0.5)"))) %>%
   addCircleMarkers(
+    radius = 7,
+    stroke = TRUE,
+    weight = 3,
+    opacity= 1,
+    color="darkolivegreen",
+    fillOpacity = .7,
+    fillColor = "skyblue",
+    popup = RossC,
     lng = -73.1810714919134, lat = 44.01077630208863,
     label = "Ross",
-    labelOptions = labelOptions(noHide = T, textOnly = TRUE)) %>%
-  #addPopups(-73.1810714919134, 44.01077630208863, content,
-    #options = popupOptions(closeButton = T))%>%
+    labelOptions = labelOptions(noHide = T,direction = "bottom",     
+        style = list(
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "12px",
+        "border-color" = "rgba(0,0,0,0.5)"))) %>%
   addCircleMarkers(
+    radius = 7,
+    stroke = TRUE,
+    weight = 3,
+    opacity= 1,
+    color="darkolivegreen",
+    fillOpacity = .7,
+    fillColor = "skyblue",
+    popup = BihallC,
     lng = -73.18128143605556, lat = 44.01344766959134,
     label = "BiHall",
-    labelOptions = labelOptions(noHide = T, textsize = "15px")) %>%
+    labelOptions = labelOptions(noHide = T, direction = "bottom",     
+        style = list(
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "12px",
+        "border-color" = "rgba(0,0,0,0.5)"))) %>%
   addCircleMarkers(
+    radius = 7,
+    stroke = TRUE,
+    weight = 3,
+    opacity= 1,
+    color="darkolivegreen",
+    fillOpacity = .7,
+    fillColor = "skyblue",
+    popup = MCRCC,
     lng = -73.17739168604255, lat = 44.00160945176687,
     label = "MCRC",
-    labelOptions = labelOptions(noHide = T, textsize = "15px")) %>%
+    labelOptions = labelOptions(noHide = T, direction = "bottom",
+     style = list(
+        "color" = "blue",
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "12px",
+        "border-color" = "rgba(0,0,0,0.5)"))) %>%
   addCircleMarkers(
+    radius = 7,
+    stroke = TRUE,
+    weight = 3,
+    opacity= 1,
+    color="darkolivegreen",
+    fillOpacity = .7,
+    fillColor = "skyblue",
+    popup = MFDC,
     lng = -73.16813214614554, lat = 44.015309452339565,
     label = "MFD",
-    labelOptions = labelOptions(noHide = T, direction = "top",
+    labelOptions = labelOptions(noHide = T, direction = "bottom",
       style = list(
         "color" = "darkred",
         "font-family" = "serif",
         "font-style" = "italic",
         "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
-        "font-size" = "16px",
+        "font-size" = "12px",
         "border-color" = "rgba(0,0,0,0.5)"
       )))
 Midd
 
-content <- paste(sep = "<br/>",
-  "<b><a href='http://www.samurainoodle.com'>Samurai Noodle</a></b>",
-  "606 5th Ave. S",
-  "Seattle, WA 98138"
-)
-
-#leaflet() %>% addTiles() %>%
- # addPopups(-122.327298, 47.597131, content,
-    #options = popupOptions(closeButton = FALSE))
-
-#addMarkers(lng=-73.17594474252131, lat=44.00826191138904, popup="Middlebury College")
-#map
-#names(providers)
 ```
 
 
