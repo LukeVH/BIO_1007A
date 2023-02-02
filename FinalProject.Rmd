@@ -8,9 +8,10 @@ editor_options:
 ---
 ## About `leaflet`  
 `leaflet` is an open-source JavaScript library that allows creation of interactive maps. I chose to learn about `leaflet` because of its aesthetic maps and coding ease. Having practice with a mapping package rounds out my R capabilities nicely.  
+
 ## Leaflet basics
 
-In order to get started with leaflet, I downloaded `leaflet` by running `install.packages("leaflet") in my console. To get familiar with the package, I made a basic map called "map" with the default OpenStreetMap map tiles. This map creates a labelled popup called "Middlebury College" on the longitute and latitute coordinates I found online for Middlebury College. 
+In order to get started with leaflet, I downloaded `leaflet` by running `install.packages("leaflet") in my console. To get familiar with the package, I made a basic map called "map" with the default OpenStreetMap map tiles. This map creates a labelled popup called "Middlebury College" on the longitude and latitude coordinates I found online for Middlebury College. 
 ```{r}
 library("leaflet")
 map <- leaflet()%>%
@@ -25,19 +26,259 @@ df
 leaflet(df) %>% addCircles(lng = ~Long, lat = ~Lat)
 ```
 Although leaflet will automatically create circles from "Long" and "Lat" columns with `addCircles()`, this can explicitly stated with `lng = ~Long, lat = ~Lat`.
+This next map uses the `addCircleMarkers()` function to manipulate the aesthetics of the circles that are created on the map.
 
 ```{r}
-m = leaflet() %>% addTiles()
-df = data.frame(
+m <- leaflet() %>% addTiles()
+df <-data.frame(
   lat = rnorm(100),
   lng = rnorm(100),
   size = runif(100, 5, 20),
-  color = sample(colors(), 100)
-)
-m = leaflet(df) %>% addTiles()
-m %>% addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)
-m %>% addCircleMarkers(radius = runif(100, 4, 10), color = c('red'))
+  color = sample(colors(), 100))
+
+m<- leaflet(df) %>% addTiles()%>%
+  addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)%>%
+  addCircleMarkers(radius = runif(100, 4, 10), color = c('red'))
+
+
 
 ```
+  
+## Map tiles  
+
+The background map is added with the function `addTiles()`. OpenStreetMap tiles are added by default. However, other maps can be used. I used the `names(providers)` to view a list of tile options that are supported by leaflet. Other third-party maps can be used although some require registration or other tokens. I used the addProviderTiles() function to add other map tiles.
+```{r}
+#names(providers)
+m%>%
+  addProviderTiles(providers$Wikimedia)
+
+```
+If you have custom map tiles you can load them in with the `addTiles()` function and input your URL into the argument. Additionally, `addWMSTiles()` can be used to load tiles from the Web Map Service. Here is an example:
+```{r}
+leaflet() %>% addTiles() %>% setView(-93.65, 42.0285, zoom = 4) %>%
+  addWMSTiles(
+    "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi",
+    layers = "nexrad-n0r-900913",
+    options = WMSTileOptions(format = "image/png", transparent = TRUE),
+    attribution = "Weather data © 2012 IEM Nexrad"
+  )
+```
+Finally, map tiles can be layered. You can adjust the opacity of tiles in the `options` argument using the `providerTileOptions()` function.
+```{r}
+m %>% 
+  addProviderTiles(providers$Stamen.TonerLines,
+    options = providerTileOptions(opacity = 0.50)) %>%
+  addProviderTiles(providers$Stamen.TonerLabels,
+  options = providerTileOptions(opacity = 0.50))
+```
+This map doesn't look very good because I have stacked multiple labels.  
+
+##  Markers  
+
+Markers on maps use data from several possible sources to mark positions on maps with circles or icons. For this tutorial, I will not use point data sources that require additional package downloads. Data sources can be data frames, matrices, or vectors. Leaflet assumes that for two column matrices, the first column is longitude and the second is latitude. For a data frame, you can explicitly tell R what columns to find coordinate data in by using the function `addMarkers()` and using language such as `(lng = ~Longitude, lat = ~Latitude)`. R will find them automatically if they are named `lat` or `latitude` and `lon`, `lng`, `long`, or `longitude`.  
+
+Markers can be added using either the `addMarkers()` or the `addAwesomeMarkers()`. Labels and popups can be added and modified with the `as.charcater()` function.
+```{r}
+m%>%
+  addTiles()%>%
+  addMarkers(popup = ~as.character("click"), label = ~as.character("hover"))
+```
+You can provide custom markers with URLs or with file paths using the function `makeIcon()`.
+```{r}
+greenLeafIcon <- makeIcon(
+  iconUrl = "https://leafletjs.com/examples/custom-icons/leaf-green.png",
+  iconWidth = 38, iconHeight = 95,
+  iconAnchorX = 22, iconAnchorY = 94,
+  shadowUrl = "https://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+  shadowWidth = 50, shadowHeight = 64,
+  shadowAnchorX = 4, shadowAnchorY = 62
+)
+
+leaflet(df) %>% addTiles() %>%
+  addMarkers(icon = greenLeafIcon)
+```
+Multiple icons can be grouped into a list with the function `iconList()` followed by the creation of the icons with `makeIcon()` functions in the argument.  
+The function `addAwesomeMarkers()` allows additionally customization of the markers. The library argument must have `ion`, `fa`, or `glyphicon` to change the icon on the marker. Markers can be clustered with `clusterOptions()`.
+```{r}
+# first 20 quakes
+df.20 <- quakes[1:20,]
+
+getColor <- function(quakes) {
+  sapply(quakes$mag, function(mag) {
+  if(mag <= 4) {
+    "green"
+  } else if(mag <= 5) {
+    "orange"
+  } else {
+    "red"
+  } })
+}
+
+icons <- awesomeIcons(
+  icon = 'ios-close',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = getColor(df.20)
+)
+
+leaflet(df.20) %>% addTiles() %>%
+  addAwesomeMarkers(~long, ~lat, icon=icons, label=~as.character(mag))
+
+```
+```{r}
+leaflet(quakes) %>% addTiles() %>% addMarkers(
+  clusterOptions = markerClusterOptions()
+)
+```
+Finally, circle markers can be added. These circles stay the same on screen size while zooming.
+```{r}
+leaflet(df) %>% addTiles() %>%  
+  addCircleMarkers(
+    radius = 10,
+    color = "red",
+    stroke = FALSE, fillOpacity = 0.5)
+```
+
+## Popups  
+I made popups, which are stand alone text boxes that can be placed on the map, with the function `addPopups()`.
+```{r}
+content <- paste(sep = "<br/>",
+  "<b><a href='https://www.middlebury.edu/#story662973'>Middlebury College</a></b>",
+  "14 Old Chapel Rd",
+  "Middlebury, VT 05753"
+)
+
+leaflet() %>% addTiles() %>%
+  addPopups(-73.17594474252131, 44.00826191138904, content,
+    options = popupOptions(closeButton = F)
+  )
+```
+To customize labels of markers, use the `labelOptions()` function.
+```{r}
+leaflet() %>% addTiles() %>% setView(-118.456554, 34.09, 13) %>%
+  addMarkers(
+    lng = -118.456554, lat = 34.105,
+    label = "Default Label",
+    labelOptions = labelOptions(noHide = T)) %>%
+  addMarkers(
+    lng = -118.456554, lat = 34.095,
+    label = "Label w/o surrounding box",
+    labelOptions = labelOptions(noHide = T, textOnly = TRUE)) %>%
+  addMarkers(
+    lng = -118.456554, lat = 34.085,
+    label = "label w/ textsize 15px",
+    labelOptions = labelOptions(noHide = T, textsize = "15px")) %>%
+  addMarkers(
+    lng = -118.456554, lat = 34.075,
+    label = "Label w/ custom CSS style",
+    labelOptions = labelOptions(noHide = T, direction = "bottom",
+      style = list(
+        "color" = "red",
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "12px",
+        "border-color" = "rgba(0,0,0,0.5)"
+      )))
+```
+
+## Shapes  
+
+There are many sources for data when working with polygons, however, many require additional packages. Without downloading anything else, two column numeric matrices can be used as the source of data, although this has a few limitations. Circles can be added with the `addCircles()` function. They are similar to circle markers except they remain fixed to the maps proportions as you zoom in and out. I used to the function `addRectangles()` to make a rectangle around Scranton. The corners of the rectangle must be defined by coordinates.
+```{r}
+cities <- read.csv(textConnection("
+City,Lat,Long,Pop
+Boston,42.3601,-71.0589,645966
+Hartford,41.7627,-72.6743,125017
+New York City,40.7127,-74.0059,8406000
+Philadelphia,39.9500,-75.1667,1553000
+Pittsburgh,40.4397,-79.9764,305841
+Providence,41.8236,-71.4222,177994
+"))
+
+leaflet(cities) %>% addTiles() %>%
+  addCircles(lng = ~Long, lat = ~Lat, weight = 1,
+    radius = ~sqrt(Pop) * 30, popup = ~City)%>%
+  addRectangles( 
+    lng1=-75.4561127, lat1=41.606411,
+    lng2=-75.8561127, lat2=41.206411,
+    fillColor = "transparent"
+  )
+```
+
+## My Map  
+Armed with this knowledge of **leaflet**, I created this map.
+```{r}
+#v<-list(44.009033701591235,-73.18251784589387,44.01077630208863,-73.1810714919134,44.01344766959134,-73.18128143605556,44.015309452339565,-73.16813214614554,44.00160945176687,-73.17739168604255)
+
+#m<-matrix(v, ncol = 2,)
+#data.frame(m, row.names = Places, col.names)
+
+dfMidd <-data.frame(
+  lat = c(44.009033701591235,44.01077630208863,44.01344766959134,44.015309452339565, 44.00160945176687),
+  lng = c(-73.18251784589387,-73.1810714919134,-73.18128143605556,-73.16813214614554,-73.17739168604255),
+  size = runif(100, 5, 20),
+  color = sample(colors(), 100))
+
+
+#ridge  44.009033701591235, -73.18251784589387
+#ross   44.01077630208863, -73.1810714919134
+#Bihall 44.01344766959134, -73.18128143605556
+#MFD 44.015309452339565, -73.16813214614554
+#MCRC 44.00160945176687, -73.17739168604255
+
+
+Midd <- leaflet(dfMidd)%>%
+  addTiles() %>%
+  addCircleMarkers(
+    lng = -73.18251784589387, lat = 44.009033701591235,
+    label = "Ridgeline",
+    labelOptions = labelOptions(noHide = T)) %>%
+  #addPopups(-73.18251784589387, 44.009033701591235, content,
+    #options = popupOptions(closeButton = T))%>%
+  addCircleMarkers(
+    lng = -73.1810714919134, lat = 44.01077630208863,
+    label = "Ross",
+    labelOptions = labelOptions(noHide = T, textOnly = TRUE)) %>%
+  #addPopups(-73.1810714919134, 44.01077630208863, content,
+    #options = popupOptions(closeButton = T))%>%
+  addCircleMarkers(
+    lng = -73.18128143605556, lat = 44.01344766959134,
+    label = "BiHall",
+    labelOptions = labelOptions(noHide = T, textsize = "15px")) %>%
+  addCircleMarkers(
+    lng = -73.17739168604255, lat = 44.00160945176687,
+    label = "MCRC",
+    labelOptions = labelOptions(noHide = T, textsize = "15px")) %>%
+  addCircleMarkers(
+    lng = -73.16813214614554, lat = 44.015309452339565,
+    label = "MFD",
+    labelOptions = labelOptions(noHide = T, direction = "top",
+      style = list(
+        "color" = "darkred",
+        "font-family" = "serif",
+        "font-style" = "italic",
+        "box-shadow" = "3px 3px rgba(0,0,0,0.25)",
+        "font-size" = "16px",
+        "border-color" = "rgba(0,0,0,0.5)"
+      )))
+Midd
+
+content <- paste(sep = "<br/>",
+  "<b><a href='http://www.samurainoodle.com'>Samurai Noodle</a></b>",
+  "606 5th Ave. S",
+  "Seattle, WA 98138"
+)
+
+#leaflet() %>% addTiles() %>%
+ # addPopups(-122.327298, 47.597131, content,
+    #options = popupOptions(closeButton = FALSE))
+
+#addMarkers(lng=-73.17594474252131, lat=44.00826191138904, popup="Middlebury College")
+#map
+#names(providers)
+```
+
+
 
 
